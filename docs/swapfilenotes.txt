@@ -1,0 +1,35 @@
+This note concerns creating and removing swap files from
+a Raspberry PI OS.
+
+Glen Langston 2021 December 9
+
+For some tasks, creating a swap file speeds execution, particulary
+for compilation of large blocks of code.
+
+This text comes from page:
+https://wiki.gnuradio.org/index.php/InstallingGRFromSource_on_Raspberry_Pi#Set_up_a_swap_file
+
+Create:
+=======
+
+sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+Then  edit /etc/fstab and add this line:
+
+/swapfile  none  swap  sw  0  0
+
+
+Remove:
+=======
+Since the Swapfile is large, It may be best to remove it
+when it is not needed.
+
+ - edit /etc/fstab and remove the entry for '/swapfile' there (the last line)
+ - swapoff /swapfile
+ - rm /swapfile
+
+
+
