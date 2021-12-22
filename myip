@@ -1,0 +1,21 @@
+#!/bin/bash
+# read the IP address from ifconfig
+# HISTORY
+# 20Nov03 GIL add logging of last IP to the bood directory
+
+/sbin/ifconfig | awk '$1 == "inet"{print$2}' | head -1 | cat > /tmp/lastip.txt
+
+cat /tmp/lastip.txt
+
+lastip=`cat /tmp/lastip.txt`
+
+# if the last ip was saved
+if [ -f /boot/lastip.txt ]
+then
+    # if the last ip was not the default, then save it
+    if [ "$lastip" != "127.0.0.1" ] ; then 
+	sudo cp /tmp/lastip.txt /boot/lastip.txt
+    fi
+fi
+
+rm -f /tmp/lastip.txt

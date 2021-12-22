@@ -1,0 +1,23 @@
+#!/bin/bash
+#HISTORY
+#21DEC08 GIL 2nd look for processes
+#21JUL02 GIL look for processes initial vesion
+
+echo "Getting Nsf Process Group Ids"
+sleep 1
+export gidinfo=`ps -ejf | grep 'python' | grep 'Nsf' | head -1`
+export gid=`echo $gidinfo | awk -v N=2 '{print $N}'`
+export gidinfo2=`ps -ejf | grep 'python' | grep 'Nsf' | tail -1`
+export gid2=`echo $gidinfo2 | awk -v N=2 '{print $N}'`
+
+echo "Re-nicing Group: " $gid 
+echo "Re-nicing Group: " $gidinfo
+
+sudo renice -n -10 -g $gid
+
+# sometimes the PID is the last in the list; use tail
+echo "Re-nicing Group " $gid2
+sudo renice -n -10 -g $gid2
+
+
+

@@ -1,0 +1,9 @@
+#!/bin/bash
+#HISTORY
+#20JUN19 GIL initialversion that starts up Observations
+
+cd $HOME/Research/gr-radio_astro/examples/nsf
+
+# 9.0 MHz SDRPlay RSP1A
+
+python NsfIntegrate90.py

@@ -18,17 +18,17 @@ if nargs > 1:
     try:
         maxcount = int(sys.argv[1])
     except:
-        print("Invalid number of samples to average: %s" % (sys.argv[1]))
+        print(("Invalid number of samples to average: %s" % (sys.argv[1])))
 
 
-print("Averaging %d GPS measurements" % (maxcount))
+print(("Averaging %d GPS measurements" % (maxcount)))
 tellons = np.zeros( maxcount)
 tellats = np.zeros( maxcount)
 telalts = np.zeros( maxcount)
 
 count = 0
 gpsd = gps(mode=WATCH_ENABLE|WATCH_NEWSTYLE) 
-print 'latitude\tlongitude\ttime utc\t\t\taltitude\tepv\tept\tspeed\tclimb' # '\t' = TAB to try and output the data in columns.
+print('latitude\tlongitude\ttime utc\t\t\taltitude\tepv\tept\tspeed\tclimb') # '\t' = TAB to try and output the data in columns.
 avelat = 0.
 avelon = 0.
 avealt = 0.
@@ -36,17 +36,21 @@ avealt = 0.
 try:
  
     while count < maxcount:
-        report = gpsd.next() #
+        try:
+            report = next(gpsd) #
+        except:
+            report = { "class": "", "foo": "bar"}
+            time.sleep(1)
         if report['class'] == 'TPV':
              
-            print  getattr(report,'lat',0.0),"\t",
-            print  getattr(report,'lon',0.0),"\t",
-            print getattr(report,'time',''),"\t",
-            print  getattr(report,'alt','nan'),"\t\t",
-            print  getattr(report,'epv','nan'),"\t",
-            print  getattr(report,'ept','nan'),"\t",
-            print  getattr(report,'speed','nan'),"\t",
-            print getattr(report,'climb','nan'),"\t"
+            print(getattr(report,'lat',0.0),"\t", end=' ')
+            print(getattr(report,'lon',0.0),"\t", end=' ')
+            print(getattr(report,'time',''),"\t", end=' ')
+            print(getattr(report,'alt','nan'),"\t\t", end=' ')
+            print(getattr(report,'epv','nan'),"\t", end=' ')
+            print(getattr(report,'ept','nan'),"\t", end=' ')
+            print(getattr(report,'speed','nan'),"\t", end=' ')
+            print(getattr(report,'climb','nan'),"\t")
             # now sum averages
             avelon = avelon + float(getattr(report,'lon',0.0))
             tellons[count] = float(getattr(report,'lon',0.0))
@@ -62,18 +66,18 @@ try:
     dlon = np.std( tellons)
     dlat = np.std( tellats)
     dalt = np.std( telalts)
-    print("Average lat, lon, alt: %13.9f %13.9f %9.3f" % \
-          ( avelat, avelon, avealt))
-    print("   +/-  lat, lon, alt: %13.9f %13.9f %9.3f" % \
-          ( dlat, dlon, dalt))
+    print(("Average lat, lon, alt: %13.9f %13.9f %9.3f" % \
+          ( avelat, avelon, avealt)))
+    print(("   +/-  lat, lon, alt: %13.9f %13.9f %9.3f" % \
+          ( dlat, dlon, dalt)))
     rEarth = 6.371E6
     dlat = dlat * rEarth * np.pi / 180.
     dlon = dlon * rEarth * np.pi / 180.
-    print("   +/-m lat, lon, alt: %10.3f %10.3f %9.3f (meters)" % \
-          ( dlat, dlon, dalt))
+    print(("   +/-m lat, lon, alt: %10.3f %10.3f %9.3f (meters)" % \
+          ( dlat, dlon, dalt)))
     print("FIX arguments for updating notes files:")
-    print("FIX -RE -LAT %11.7f -LON %11.7f -ALT %7.3f" % \
-          (avelat, avelon, avealt))
+    print(("FIX -RE -LAT %11.7f -LON %11.7f -ALT %7.3f" % \
+          (avelat, avelon, avealt)))
 
 # keep latitude and longitude in float format
     lat = avelat
@@ -116,5 +120,5 @@ try:
     print(('Longitude: %s%02d:%02d:%05.2f' % (pmlon,dlon,mlon,slon)))
 
 except (KeyboardInterrupt, SystemExit): #when you press ctrl+c
-    print "Done.\nExiting."
+    print("Done.\nExiting.")
     x

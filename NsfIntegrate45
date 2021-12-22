@@ -1,0 +1,12 @@
+#!/bin/bash
+#HISTORY
+#21DEC08 GIL enable any user to use this code
+#20Aug16 GIL initial version that starts up Observations
+
+cd $HOME/Research/gr-radio_astro/examples/nsf
+
+echo "------------------------"
+echo "Pluto Sdr with 4.5 MHz bandwidth"
+echo "------------------------"
+
+python NsfIntegrate45.py

@@ -1,0 +1,5 @@
+#!/bin/bash
+#HISTORY
+#20AUG16 GIL initial version to measure CPU Speed
+
+vcgencmd measure_clock arm

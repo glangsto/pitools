@@ -1,0 +1,11 @@
+#!/bin/bash
+#HISTORY
+#20JUN22 GIL Watch for events
+#20JUN17 GIL initialversion that starts up Observations
+
+cd /home/pi/Research/gr-radio_astro/examples
+echo "------------------------"
+echo "Gnuradio Companion"
+echo "------------------------"
+
+gnuradio-companion

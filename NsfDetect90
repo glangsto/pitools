@@ -1,0 +1,8 @@
+#!/bin/bash
+#HISTORY
+#20JUN17 GIL initialversion that starts up Observations
+
+cd $HOME/Research/gr-radio_astro/examples/nsf
+
+# Event Detection at 9.0 MHz with SDRplay
+python NsfDetect90.py

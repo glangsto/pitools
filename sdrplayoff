@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo systemctl stop sdrplay
+sudo systemctl disable sdrplay

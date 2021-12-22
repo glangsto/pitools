@@ -1,0 +1,12 @@
+#!/bin/bash
+#HISTORY
+#21DEC08 GIL enable any user to use this code
+#20JUN17 GIL initialversion that starts up Observations
+
+cd $HOME/Research/gr-radio_astro/examples/nsf
+
+echo "------------------------"
+echo "NeSDR Radio Astronomy with 2.4 MHz bandwidth"
+echo "------------------------"
+
+python NsfIntegrate24.py

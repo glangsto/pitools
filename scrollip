@@ -1,0 +1,7 @@
+#!/bin/bash
+# use the version in analyze
+
+python /home/pi/Research/analyze/scrollip.py
+
+
+

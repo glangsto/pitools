@@ -1,0 +1,12 @@
+#!/bin/bash
+#HISTORY
+#21DEC08 GIL enable any user to use this code
+#20AUG16 GIL Watch for events
+#20JUN17 GIL initialversion that starts up Observations
+
+cd $HOME/Research/gr-radio_astro/examples/nsf
+echo "------------------------"
+echo "NSF Astronomy - Airspy Event Detection; 2.5 MHz bandwidth"
+echo "------------------------"
+
+python NsfDetect25.py

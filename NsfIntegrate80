@@ -1,0 +1,11 @@
+#!/bin/bash
+#HISTORY
+#20Aug18 GIL update for 8 MHz 
+#20JUN19 GIL initialversion that starts up Observations
+
+
+cd $HOME/Research/gr-radio_astro/examples/nsf
+
+# 8.0 MHz SDRPlay RSP1A
+
+python NsfIntegrate80.py

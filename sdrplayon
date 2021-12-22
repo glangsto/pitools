@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo systemctl enable sdrplay
+sudo systemctl start sdrplay
