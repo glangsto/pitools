@@ -1,0 +1,21 @@
+#!/bin/bash
+# gps coordinate averaging program
+# based on git clone https://www.github.com/wadda/gps3
+
+# History
+# 22JAN13 GIL Initial version based on ahuman.py
+# find the GPS coordinate averaging program
+if [ -e showgps.py ]
+then
+    python3 showgps.py "$@"
+else
+    if [ -e ~/Research/pitools/showgps.py ]
+    then
+       python3 ~/Research/pitools/showgps.py "$@"
+    else
+	if [ -e ~/bin/showgps.py ]
+	then
+	    python3 ~/bin/showgps.py "$@"
+	fi
+    fi
+fi
