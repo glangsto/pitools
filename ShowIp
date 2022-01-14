@@ -1,0 +1,15 @@
+#!/bin/bash
+#HISTORY
+#21DEC08 GIL 2nd look for processes
+#21JUL02 GIL look for processes initial vesion
+
+echo "Preparing to show the IP address on the WaveShare hat"
+
+sudo su
+source /root/.bashrc
+
+/usr/bin/python3 /root/PoE_HAT_B_code/python/examples/wavesharePOE.py &
+
+
+
+
