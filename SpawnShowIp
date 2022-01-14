@@ -2,7 +2,7 @@
 #HISTORY
 #22Jan14 GIL initial version
 
-sudo ~/bin/ShowIp &
+sudo ~/Research/pitools/ShowIp &
 
 
 
