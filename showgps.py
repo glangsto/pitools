@@ -23,7 +23,9 @@ from datetime import datetime
 from math import modf
 from time import sleep
 
-nAve = 0
+nLon = 0
+nLat = 0
+nAlt = 0
 aveLatitude = 0.
 aveLongitude = 0.
 aveAltitude = 0.
@@ -72,29 +74,31 @@ def compute_ave():
     """
     global Longitude, Latitude, Altitude
     global aveLongitude, aveLatitude, aveAltitude
-    global nAve
+    global nLon, nLat, nAlt
     
-    if nAve <= 0:
-        return
-    Longitude = aveLongitude / float(nAve)
-    Latitude  = aveLatitude / float(nAve)
-    Altitude = aveAltitude / float(nAve)
+    if nLon > 0:
+        Longitude = aveLongitude / float(nLon)
+    if nLat > 0:
+        Latitude = aveLatitude / float(nLat)
+    if nAlt > 0:
+        Altitude = aveAltitude / float(nAlt)
     return # end of compute_ave()
 
-def show_ave(inmax):
+def show_ave():
     """
     Finish the average of the coordinates and start new average
     """
     global Longitude, Latitude, Altitude
     global aveLongitude, aveLatitude, aveAltitude
-    global nAve
+    global nLon, nLat, nAlt
     
-    if nAve <= 0:
-        return
     compute_ave()
-    print( "Longitude: %13.9f (d)" % (Longitude))
-    print( "Latitude:  %13.9f (d)" % (Latitude))
-    print( "Altitude:  %7.3f (m) " % (Altitude))
+    if nLon > 0:
+        print( "Longitude: %13.9f (d)" % (Longitude))
+    if nLat > 0:
+        print( "Latitude:  %13.9f (d)" % (Latitude))
+    if nAlt > 0:
+        print( "Altitude:  %7.3f (m) " % (Altitude))
     print( "FIX -RE -LON %12.9f -LAT %12.9f -ALT %7.3f " % (Longitude, Latitude, Altitude))
     return # end of show_ave()
 
@@ -204,7 +208,7 @@ def show_human():
     units = 'raw'
     global Longitude, Latitude, Altitude
     global aveLongitude, aveLatitude, aveAltitude
-    global nAve
+    global nLon, nLat, nAlt
     
     data_window = curses.newwin(21, 39, 0, 0)
     sat_window = curses.newwin(14, 39, 0, 40)
@@ -270,30 +274,30 @@ def show_human():
             data_window.addstr(16, 2, 'ydop:{}  xdop:{} '.format(data_stream.ydop, data_stream.xdop))
             data_window.addstr(17, 2, 'vdop:{}  hdop:{} '.format(data_stream.vdop, data_stream.hdop))
 
-                
-            if (data_stream.lon != 'n/a' and \
-                data_stream.lat != 'n/a' and \
-                data_stream.alt != 'n/a'):
+            if data_stream.lon != 'n/a':
                 aveLongitude = aveLongitude + float(data_stream.lon)
-                aveLatitude = aveLatitude + float(data_stream.lat)
-                aveAltitude = aveAltitude + float(data_stream.alt)
-                # Initialize if no aver
-                if Longitude == 0. and Latitude == 0.:
+                if Longitude == 0.:
                     Longitude = float(data_stream.lon)
-                    Latitude =  float(data_stream.lat)
+                nLon = nLon + 1
+            if data_stream.lat != 'n/a':
+                aveLatitude = aveLatitude + float(data_stream.lat)
+                nLat = nLat + 1
+                if Latitude == 0.:
+                    Latitude = float(data_stream.lat)
+            if data_stream.alt != 'n/a':
+                aveAltitude = aveAltitude + float(data_stream.alt)
+                nAlt = nAlt + 1
+                if Altitude == 0.:
                     Altitude = float(data_stream.alt)
-                nAve = nAve + 1
-                compute_ave()
-                data_window.addstr(18, 2, 'Ave: {} {}'.format(\
+            nAve = max( nLon, nLat, nAlt)
+            compute_ave()
+            data_window.addstr(18, 2, 'Ave: {} {}'.format(\
                             sexagesimal(Longitude, 'lon', form),
                             sexagesimal(Latitude, 'lat', form)))
-#                                   format(Longitude, Latitude, Altitude))
-                data_window.addstr(19, 2, '      {} {},   N: {}  '.format(\
-                                   *unit_conversion(Altitude, units, length=True),
-                                   nAve))
-                
-#                                   format(Longitude, Latitude, Altitude))
-            
+
+            data_window.addstr(19, 2, '      {} {},   N: {}  '.format(\
+                                *unit_conversion(Altitude, units, length=True),
+                                nAve))
             sat_window.clear()
             sat_window.box()
             sat_window.addstr(0, 2, 'Using {0[1]}/{0[0]} satellites (truncated)'.format(satellites_used(data_stream.satellites)))
@@ -364,9 +368,8 @@ def shut_down():
     curses.echo()
     curses.endwin()
     gpsd_socket.close()
-    nmax = nAve
     sleep(1)
-    show_ave(nAve)
+    show_ave()
     sleep(1)
     print('Keyboard interrupt received\nTerminated by user\nGood Bye.\n')
     sys.exit(1)
