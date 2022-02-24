@@ -32,7 +32,14 @@ aveAltitude = 0.
 Latitude = 0.
 Longitude = 0.
 Altitude = 0.
-nmax = 60
+# also average the XYZ coordiantes
+nXYZ = 0
+X = 0.
+Y = 0.
+Z = 0.
+aveX = 0.
+aveY = 0.
+aveZ = 0.
 
 from gps3 import agps3  # Moe, remember to CHANGE to straight 'import agps3' if not installed,
 # or check which Python version it's installed in. You forget sometimes.
@@ -75,13 +82,19 @@ def compute_ave():
     global Longitude, Latitude, Altitude
     global aveLongitude, aveLatitude, aveAltitude
     global nLon, nLat, nAlt
-    
+    global nXYZ
+    global aveX,aveY,aveZ,X,Y,Z
+
     if nLon > 0:
         Longitude = aveLongitude / float(nLon)
     if nLat > 0:
         Latitude = aveLatitude / float(nLat)
     if nAlt > 0:
         Altitude = aveAltitude / float(nAlt)
+    if nXYZ > 0:
+        X = aveX/float(nXYZ)
+        Y = aveY/float(nXYZ)
+        Z = aveZ/float(nXYZ)
     return # end of compute_ave()
 
 def show_ave():
@@ -89,8 +102,9 @@ def show_ave():
     Finish the average of the coordinates and start new average
     """
     global Longitude, Latitude, Altitude
-    global aveLongitude, aveLatitude, aveAltitude
     global nLon, nLat, nAlt
+    global nXYZ
+    global X, Y, Z
     
     compute_ave()
     if nLon > 0:
@@ -99,6 +113,9 @@ def show_ave():
         print( "Latitude:  %13.9f (d)" % (Latitude))
     if nAlt > 0:
         print( "Altitude:  %7.3f (m) " % (Altitude))
+    if nXYZ > 0:
+        print( " X, Y, Z: %12.2f %12.2f %12.2f (m)" % (X, Y, Z))
+               
     print( "FIX -RE -LON %12.9f -LAT %12.9f -ALT %7.3f " % (Longitude, Latitude, Altitude))
     return # end of show_ave()
 
@@ -320,8 +337,8 @@ def show_human():
 
                     device_window.addstr(1, 2, 'Activated: {}'.format(gizmo['activated']))
                     device_window.addstr(2, 2, 'Host:{0.host}:{0.port} {1}'.format(args, gizmo['path']))
-                    device_window.addstr(3, 2, 'Driver:{driver}     BPS:{bps}'.format(**gizmo))
-                    device_window.addstr(4, 2, 'Cycle:{0} Hz {1!s:>14} Elapsed'.format(1 / gizmo['cycle'], elapsed))
+#                    device_window.addstr(3, 2, 'Driver:{driver}     BPS:{bps}'.format(**gizmo))
+#                    device_window.addstr(4, 2, 'Cycle:{0} Hz {1!s:>14} Elapsed'.format(1 / gizmo['cycle'], elapsed))
 
 #            packet_window.clear()
             # packet_window.border(0)
