@@ -2,4 +2,4 @@
 #HISTORY
 #20AUG16 GIL initial version to measure CPU Speed
 
-vcgencmd measure_clock arm
+sudo vcgencmd measure_clock arm

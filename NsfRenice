@@ -6,9 +6,9 @@
 echo "Getting Nsf Process Group Ids"
 sleep 1
 export gidinfo=`ps -ejf | grep 'python' | grep 'Nsf' | head -1`
-export gid=`echo $gidinfo | awk -v N=2 '{print $N}'`
+export gid=`echo $gidinfo | awk -v N=3 '{print $N}'`
 export gidinfo2=`ps -ejf | grep 'python' | grep 'Nsf' | tail -1`
-export gid2=`echo $gidinfo2 | awk -v N=2 '{print $N}'`
+export gid2=`echo $gidinfo2 | awk -v N=3 '{print $N}'`
 
 echo "Re-nicing Group: " $gid 
 echo "Re-nicing Group: " $gidinfo
