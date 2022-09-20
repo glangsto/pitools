@@ -1,0 +1,9 @@
+#!/bin/bash
+# slow down the ethernet if link is unstable
+
+echo "Decreasing ethernet speed to 100 Mbps"
+
+sudo ethtool -s eth0 speed 100 duplex full autoneg off
+
+echo "done!"
+
