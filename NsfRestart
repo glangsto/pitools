@@ -5,17 +5,17 @@
 export NsfHome=/home/radioastro/Research/gr-radio_astro/examples/nsf
 export NsfExec=NsfWatchNoGui80.py
 echo "Launching NsfWatch"
-
+sleep 5
 echo Going to Directory $NsfHome
 cd $NsfHome
 
 # this line executes the command
-/usr/bin/python $NsfExec &
+/usr/bin/python3 $NsfExec &
 
 echo "Waiting for NsfWatch to start"
-sleep 5
+sleep 15
 echo "Getting NsfWatch PID"
-sleep 1
+
 export gidinfo=`ps -ejf | grep 'python' | grep 'NsfWatch' | head -1`
 export gid=`echo $gidinfo | awk -v N=3 '{print $N}'`
 export gidinfo2=`ps -ejf | grep 'python' | grep 'NsfWatch' | tail -1`
@@ -25,7 +25,7 @@ if [ "$gid" == "" ]
 then
    echo "Nsf Watch did not start; Trying again!"
    /usr/bin/python $NsfExec &
-   sleep 5
+   sleep 15
 fi
 
 export gidinfo=`ps -ejf | grep 'python' | grep 'NsfWatch' | head -1`
@@ -40,7 +40,7 @@ if [ "$gid" == "" ]
 then
    echo "Nsf Watch did not start again; Trying a 3rd Time!"
    /usr/bin/python $NsfExec &
-   sleep 5
+   sleep 15
 fi
 
 export gidinfo=`ps -ejf | grep 'python' | grep 'NsfWatch' | head -1`
