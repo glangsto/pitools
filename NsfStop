@@ -1,0 +1,37 @@
+#!/bin/bash
+#HISTORY
+#23Mar28 GIL initial version Stop background Watching
+
+echo "Stopping NsfWatch"
+sleep 1
+echo "Getting NsfWatch PID"
+
+export gidinfo=`ps -ejf | grep 'NsfWatch' | head -1`
+export gid=`echo $gidinfo | awk -v N=3 '{print $N}'`
+if [ "$gid" == "1" ]
+then
+    export gid=`echo $gidinfo | awk -v N=2 '{print $N}'`
+fi
+
+echo "gid == " $gid
+
+export gidinfo2=`ps -ejf | grep 'NsfWatch' | tail -1`
+export gid2=`echo $gidinfo2 | awk -v N=3 '{print $N}'`
+if [ "$gid2" == "1" ]
+then
+    export gid2=`echo $gidinfo2 | awk -v N=2 '{print $N}'`
+fi
+
+if [ "$gid" != "" ]
+then
+   echo "Stopping Process ID" $gid
+   kill -9 $gid
+   sleep 1
+else
+    if [ "$gid2" != "" ]
+    then
+	echo "Stopping Process ID" $gid2
+	kill -9 $gid2
+   fi 
+fi
+
