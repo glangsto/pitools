@@ -1,0 +1,30 @@
+#!/bin/bash
+#Bash Script to check for NSF communication Files in the /tmp
+#directory and restart observations as needed.
+#HISTORY
+#26Apr13 GIL Initial version
+
+if [ $# -eq 0 ]; then
+    echo "Must provide an Elevation (in degrees)"
+    exit -1
+fi
+
+export NewEl=$1
+# go to where the config files are
+
+cd ~/nsf
+
+# Define the extension
+EXT="conf"
+
+# Loop through matching files
+for file in *."$EXT"; do
+    # Check if files exist to avoid errors
+    [ -e "$file" ] || continue
+    
+    echo "Processing $file..."
+    sed -i "s/^\(elevation[[:space:]]*=[[:space:]]*\).*/\1$NewEl/" $file
+done
+
+
+

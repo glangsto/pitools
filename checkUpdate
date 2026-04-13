@@ -23,6 +23,7 @@ if [ -f "$FILE" ]; then
    echo $NewEl
    ~/Research/pitools/NsfStop
    cd ~/nsf
+   ~/Research/pitools/replaceElevation $NewEl
    ~/Research/analyze/FIX -RE -EL $NewEl *.not
    ~/Research/pitools/NsfRestart
    rm $FILE
@@ -34,6 +35,7 @@ if [ -f "$FILE" ]; then
    echo $NewAz
    ~/Research/pitools/NsfStop
    cd ~/nsf
+   ~/Research/pitools/replaceElevation $NewAz
    FIX -RE -AZ $NewAz *.not
    ~/Research/pitools/NsfRestart
    rm $FILE

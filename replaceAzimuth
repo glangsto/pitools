@@ -1,0 +1,29 @@
+#!/bin/bash
+#Bash Script to update Gnuradio configuration files for new Azimuth
+#HISTORY
+#26Apr13 GIL Initial version
+
+if [ $# -eq 0 ]; then
+    echo "Must provide an Azimuth (in degrees)"
+    exit -1
+fi
+
+export NewAz=$1
+# go to where the config files are
+
+cd ~/nsf
+
+# Define the extension
+EXT="conf"
+
+# Loop through matching files
+for file in *."$EXT"; do
+    # Check if files exist to avoid errors
+    [ -e "$file" ] || continue
+    
+    echo "Processing $file..."
+    sed -i "s/^\(elevation[[:space:]]*=[[:space:]]*\).*/\1$NewAz/" $file
+done
+
+
+
