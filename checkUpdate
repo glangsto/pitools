@@ -1,0 +1,41 @@
+#!/bin/bash
+#Bash Script to check for NSF communication Files in the /tmp
+#directory and restart observations as needed.
+#HISTORY
+#26Apr13 GIL Initial version
+
+FILE="/tmp/NsfStop"
+if [ -f "$FILE" ]; then
+   ~/Research/pitools/NsfStop
+   rm $FILE
+fi
+
+FILE="/tmp/NsfRestart"
+if [ -f "$FILE" ]; then
+   ~/Research/pitools/NsfRestart
+   rm $FILE
+fi
+
+FILE="/tmp/NsfElevation"
+if [ -f "$FILE" ]; then
+   echo "Found New Eevation"
+   export NewEl=`cat $FILE`
+   echo $NewEl
+   ~/Research/pitools/NsfStop
+   cd ~/nsf
+   ~/Research/analyze/FIX -RE -EL $NewEl *.not
+   ~/Research/pitools/NsfRestart
+   rm $FILE
+fi
+
+FILE="/tmp/NsfAzimuth"
+if [ -f "$FILE" ]; then
+   export NewAz=`cat $FILE`
+   echo $NewAz
+   ~/Research/pitools/NsfStop
+   cd ~/nsf
+   FIX -RE -AZ $NewAz *.not
+   ~/Research/pitools/NsfRestart
+   rm $FILE
+fi
+
