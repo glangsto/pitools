@@ -1,0 +1,36 @@
+#!/bin/bash
+#Bash Script to send the azimuth for all telescopes
+#HISTORY
+#26Apr13 GIL Initial version
+
+#
+# check if an Azimuth value was passed
+if [ $# -eq 0 ]; then
+    echo "Must provide an Azimuth value (degrees)"
+    exit 1
+fi 
+#
+# Create the elevation file
+#
+
+FILE="/tmp/NsfAzimuth"
+echo "$1" > $FILE
+
+#Sending this file causes
+# 1: The observations stop
+# 2: The .not files in the ~/nsf subdirectory are updated
+# 3: The observations are restarted
+
+scp $FILE radioastro@192.168.1.201:$FILE
+scp $FILE radioastro@192.168.1.202:$FILE
+scp $FILE radioastro@192.168.1.203:$FILE
+scp $FILE radioastro@192.168.1.204:$FILE
+scp $FILE radioastro@192.168.1.205:$FILE
+scp $FILE radioastro@192.168.1.206:$FILE
+scp $FILE radioastro@192.168.1.207:$FILE
+scp $FILE radioastro@192.168.1.208:$FILE
+scp $FILE radioastro@192.168.1.209:$FILE
+scp $FILE radioastro@192.168.1.210:$FILE
+scp $FILE radioastro@192.168.1.211:$FILE
+scp $FILE radioastro@192.168.1.214:$FILE
+
