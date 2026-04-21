@@ -30,6 +30,7 @@ fi
 
 FILE="/tmp/NsfRestart"
 if [ -f "$FILE" ]; then
+   $TOOLS/NsfStop
    $TOOLS/NsfRestart
    rm $FILE
    echo $now "Restarted Observations" >> $UPDATELOG
