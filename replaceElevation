@@ -1,7 +1,8 @@
 #!/bin/bash
-#Bash Script to check for NSF communication Files in the /tmp
-#directory and restart observations as needed.
+#Bash Script to update the GnurRadio Configuration files and 
+#RadioAstro Note files for new telescope position
 #HISTORY
+#26Apr21 GIL update note files for new position
 #26Apr13 GIL Initial version
 
 if [ $# -eq 0 ]; then
@@ -26,5 +27,7 @@ for file in *."$EXT"; do
     sed -i "s/^\(elevation[[:space:]]*=[[:space:]]*\).*/\1$NewEl/" $file
 done
 
+echo "Updating Note files for new Elevation:" $NewEl
 
+$HOME/Research/analyze/FIX -RE -EL $NewEl *.not
 
