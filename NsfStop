@@ -7,7 +7,7 @@ echo "Stopping Nsf observations"
 sleep 1
 echo "Getting Nsf PID"
 
-export gidinfo=`ps auxww | grep 'python Nsf' | tail -1`
+export gidinfo=`ps auxww | grep 'python' | grep 'Nsf' | tail -1`
 export gid=`echo $gidinfo | awk -v N=2 '{print $N}'`
 if [ "$gid" == "1" ]
 then
@@ -16,7 +16,7 @@ fi
 
 echo "gid == " $gid
 
-export gidinfo2=`ps auxww | grep 'python Nsf' | tail -1`
+export gidinfo2=`ps auxww | grep 'python' | grep 'Nsf' | tail -1`
 export gid2=`echo $gidinfo2 | awk -v N=2 '{print $N}'`
 if [ "$gid2" == "1" ]
 then
