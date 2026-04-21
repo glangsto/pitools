@@ -1,13 +1,15 @@
 #!/bin/bash
 # slow down the ethernet if link is unstable
 # HISTORY
+# 26Apr21 GIL increase default speed back up to 100 Mbps
 # 26Apr18 GIL reduced default speed for distant telescopes
 
-echo "Decreasing ethernet speed to 10 Mbps"
+echo "Decreasing ethernet speed to 100 Mbps"
 
 #Was: sudo ethtool -s eth0 speed 100 duplex full autoneg off
+#was also: sudo ethtool -s eth0 speed 10 duplex full autoneg on
 
-sudo ethtool -s eth0 speed 10 duplex full autoneg on
+sudo ethtool -s eth0 speed 100 duplex full autoneg on
 
 echo "done!"
 
