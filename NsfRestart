@@ -1,9 +1,10 @@
 #!/bin/bash
 #HISTORY
+#26Apr21 GIL default is now Airspy mini SDR
 #23Mar27 GIL initial version restart NsfWatch after reboot
 
 export NsfHome=/home/radioastro/Research/gr-radio_astro/examples/nsf
-export NsfExec=NsfWatchNoGui80.py
+export NsfExec=NsfWatchNoGui60.py
 echo "Launching NsfWatch"
 sleep 5
 echo Going to Directory $NsfHome

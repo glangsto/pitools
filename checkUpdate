@@ -5,16 +5,25 @@
 #26Apr21 GIL Fix Azmuth update
 #26Apr13 GIL Initial version
 
-FILE="/tmp/NsfStop"
+#Must set the Pi home directory for pitools and analyze
+export RAHOME=/home/radioastro
+export TOOLS=$RAHOME/Research/pitools
+export ANALYZE=$RAHOME/Research/analyze
+
+export now=`date -u`
+
+export FILE="/tmp/NsfStop"
 if [ -f "$FILE" ]; then
-   ~/Research/pitools/NsfStop
+   $TOOLS/NsfStop
    rm $FILE
+   echo $now "Stopped Observations" >> /tmp/Update.log
 fi
 
 FILE="/tmp/NsfRestart"
 if [ -f "$FILE" ]; then
-   ~/Research/pitools/NsfRestart
+   $TOOLS/NsfRestart
    rm $FILE
+   echo $now "Restarted Observations" >> /tmp/Update.log
 fi
 
 FILE="/tmp/NsfElevation"
@@ -22,23 +31,22 @@ if [ -f "$FILE" ]; then
    echo "Found New Eevation"
    export NewEl=`cat $FILE`
    echo $NewEl
-   ~/Research/pitools/NsfStop
-   cd ~/nsf
-   ~/Research/pitools/replaceElevation $NewEl
-   ~/Research/analyze/FIX -RE -EL $NewEl *.not
-   ~/Research/pitools/NsfRestart
+   $TOOLS/NsfStop
+   cd $HOME/nsf
+   $TOOLS/replaceElevation $NewEl
    rm $FILE
+   echo $now "Updated Elevation" >> /tmp/Update.log
 fi
 
 FILE="/tmp/NsfAzimuth"
 if [ -f "$FILE" ]; then
    export NewAz=`cat $FILE`
    echo $NewAz
-   ~/Research/pitools/NsfStop
-   cd ~/nsf
-   ~/Research/pitools/replaceAzimuth $NewAz
-   FIX -RE -AZ $NewAz *.not
-   ~/Research/pitools/NsfRestart
+   $TOOLS/NsfStop
+   $HOME/nsf
+   $TOOLS/replaceAzimuth $NewAz
+   $TOOLS/NsfRestart
    rm $FILE
+   echo $now "Updated Azimuth" >> /tmp/Update.log
 fi
 
