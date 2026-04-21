@@ -16,7 +16,7 @@ fi
 
 echo "gid == " $gid
 
-export gidinfo2=`ps auxww | grep 'python' | grep 'Nsf' | tail -1`
+export gidinfo2=`ps auxww | grep 'python' | grep 'Nsf' | head -1`
 export gid2=`echo $gidinfo2 | awk -v N=2 '{print $N}'`
 if [ "$gid2" == "1" ]
 then
