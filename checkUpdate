@@ -2,28 +2,37 @@
 #Bash Script to check for NSF communication Files in the /tmp
 #directory and restart observations as needed.
 #HISTORY
-#26Apr21 GIL Fix Azmuth update
+#26Apr21 GIL Fix Azmuth update, add log and reboot
 #26Apr13 GIL Initial version
 
 #Must set the Pi home directory for pitools and analyze
 export RAHOME=/home/radioastro
 export TOOLS=$RAHOME/Research/pitools
 export ANALYZE=$RAHOME/Research/analyze
+# keep track of global actions
+export UPDATELOG=$RAHOME/Update.log
 
+# log utc time of events
 export now=`date -u`
 
 export FILE="/tmp/NsfStop"
 if [ -f "$FILE" ]; then
    $TOOLS/NsfStop
    rm $FILE
-   echo $now "Stopped Observations" >> /tmp/Update.log
+   echo $now "Stopped Observations" >> $UPDATELOG
+fi
+
+export FILE="/tmp/NsfReboot"
+if [ -f "$FILE" ]; then
+   echo $now "Rebooting" >> $UPDATELOG
+   sudo reboot
 fi
 
 FILE="/tmp/NsfRestart"
 if [ -f "$FILE" ]; then
    $TOOLS/NsfRestart
    rm $FILE
-   echo $now "Restarted Observations" >> /tmp/Update.log
+   echo $now "Restarted Observations" >> $UPDATELOG
 fi
 
 FILE="/tmp/NsfElevation"
@@ -35,7 +44,7 @@ if [ -f "$FILE" ]; then
    cd $HOME/nsf
    $TOOLS/replaceElevation $NewEl
    rm $FILE
-   echo $now "Updated Elevation" >> /tmp/Update.log
+   echo $now "Updated Elevation" >> $UPDATELOG
 fi
 
 FILE="/tmp/NsfAzimuth"
@@ -47,6 +56,6 @@ if [ -f "$FILE" ]; then
    $TOOLS/replaceAzimuth $NewAz
    $TOOLS/NsfRestart
    rm $FILE
-   echo $now "Updated Azimuth" >> /tmp/Update.log
+   echo $now "Updated Azimuth" >> $UPDATELOG
 fi
 
