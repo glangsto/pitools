@@ -1,25 +1,26 @@
 #!/bin/bash
 #HISTORY
+#26Apr21 GIL stop all Nsf tagged processes
 #23Mar28 GIL initial version Stop background Watching
 
-echo "Stopping NsfWatch"
+echo "Stopping Nsf observations"
 sleep 1
-echo "Getting NsfWatch PID"
+echo "Getting Nsf PID"
 
-export gidinfo=`ps -ejf | grep 'NsfWatch' | head -1`
-export gid=`echo $gidinfo | awk -v N=3 '{print $N}'`
+export gidinfo=`ps auxww | grep 'python Nsf' | tail -1`
+export gid=`echo $gidinfo | awk -v N=2 '{print $N}'`
 if [ "$gid" == "1" ]
 then
-    export gid=`echo $gidinfo | awk -v N=2 '{print $N}'`
+    export gid=`echo $gidinfo | awk -v N=3 '{print $N}'`
 fi
 
 echo "gid == " $gid
 
-export gidinfo2=`ps -ejf | grep 'NsfWatch' | tail -1`
-export gid2=`echo $gidinfo2 | awk -v N=3 '{print $N}'`
+export gidinfo2=`ps auxww | grep 'python Nsf' | tail -1`
+export gid2=`echo $gidinfo2 | awk -v N=2 '{print $N}'`
 if [ "$gid2" == "1" ]
 then
-    export gid2=`echo $gidinfo2 | awk -v N=2 '{print $N}'`
+    export gid2=`echo $gidinfo2 | awk -v N=3 '{print $N}'`
 fi
 
 if [ "$gid" != "" ]
