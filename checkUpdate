@@ -2,6 +2,7 @@
 #Bash Script to check for NSF communication Files in the /tmp
 #directory and restart observations as needed.
 #HISTORY
+#26Apr21 GIL Fix Azmuth update
 #26Apr13 GIL Initial version
 
 FILE="/tmp/NsfStop"
@@ -35,7 +36,7 @@ if [ -f "$FILE" ]; then
    echo $NewAz
    ~/Research/pitools/NsfStop
    cd ~/nsf
-   ~/Research/pitools/replaceElevation $NewAz
+   ~/Research/pitools/replaceAzimuth $NewAz
    FIX -RE -AZ $NewAz *.not
    ~/Research/pitools/NsfRestart
    rm $FILE
