@@ -1,0 +1,8 @@
+#!/bin/bash
+#Bash Script identify the raspberry pi computer type
+#HISTORY
+#26Apr26 GIL Initial version
+
+tail -1 /proc/cpuinfo
+
+
