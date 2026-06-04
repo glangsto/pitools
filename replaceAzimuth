@@ -2,6 +2,7 @@
 #Bash Script to update Gnuradio configuration files for new Azimuth
 #RadioAstro Note files for new telescope position
 #HISTORY
+#26Jun04 GIL was updating elevation; now fixed to update azimuth
 #26Apr21 GIL update note files for new position
 #26Apr13 GIL Initial version
 
@@ -24,7 +25,7 @@ for file in *."$EXT"; do
     [ -e "$file" ] || continue
     
     echo "Processing $file..."
-    sed -i "s/^\(elevation[[:space:]]*=[[:space:]]*\).*/\1$NewAz/" $file
+    sed -i "s/^\(azimuth[[:space:]]*=[[:space:]]*\).*/\1$NewAz/" $file
 done
 
 echo "Updating Note files for new Azimuth:" $NewAz
